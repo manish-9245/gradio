@@ -215,6 +215,10 @@ class TestSanitizeForCSV:
         assert sanitize_value_for_csv("=OPEN()") == "'=OPEN()"
         assert sanitize_value_for_csv("=1+2") == "'=1+2"
         assert sanitize_value_for_csv('=1+2";=1+2') == "'=1+2\";=1+2"
+        assert sanitize_value_for_csv("\t=1+2") == "'\t=1+2"
+        assert sanitize_value_for_csv("\r=1+2") == "'\r=1+2"
+        assert sanitize_value_for_csv("\n=1+2") == "'\n=1+2"
+        assert sanitize_value_for_csv("gh,\r=1+2") == "'gh,\r=1+2"
 
     def test_safe_value(self):
         assert sanitize_value_for_csv(4) == 4
